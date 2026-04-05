@@ -4,10 +4,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 const socials = [
-  { name: "GitHub", href: "#", icon: "GH" },
-  { name: "领英", href: "#", icon: "LI" },
-  { name: "推特", href: "#", icon: "TW" },
-  { name: "邮箱", href: "mailto:hello@example.com", icon: "EM" },
+  { name: "GitHub", href: "#", icon: "GH", color: "hover:text-foreground hover:border-foreground/30 hover:bg-foreground/5" },
+  { name: "领英", href: "#", icon: "LI", color: "hover:text-indigo hover:border-indigo/30 hover:bg-indigo-subtle" },
+  { name: "推特", href: "#", icon: "TW", color: "hover:text-teal hover:border-teal/30 hover:bg-teal-subtle" },
+  { name: "邮箱", href: "mailto:hello@example.com", icon: "EM", color: "hover:text-coral hover:border-coral/30 hover:bg-coral-subtle" },
 ];
 
 export default function Contact() {
@@ -16,15 +16,24 @@ export default function Contact() {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section id="contact" ref={ref} className="relative py-32 px-6">
-      <motion.div
-        initial={false}
-        animate={{ scaleX: inView ? 1 : 0 }}
-        transition={{ duration: 1.2 }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-2/3 bg-gradient-to-r from-transparent via-orange/30 to-transparent origin-center"
-      />
+    <section id="contact" ref={ref} className="relative py-32 px-6 overflow-hidden">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-t from-orange-subtle/60 via-background to-background" />
 
-      <div className="mx-auto max-w-2xl text-center">
+      {/* Decorative curves at top */}
+      <div className="absolute top-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" fill="none" className="w-full" preserveAspectRatio="none">
+          <path d="M0 60C480 10 960 10 1440 60V0H0V60Z" fill="var(--color-background)" />
+          <path d="M0 40C360 5 720 0 1080 15C1260 22 1380 35 1440 40" stroke="var(--color-orange)" strokeWidth="0.5" strokeOpacity="0.2" fill="none" />
+        </svg>
+      </div>
+
+      {/* Floating decorative dots */}
+      <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-32 left-[15%] h-3 w-3 rounded-full bg-amber/30" />
+      <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 5 }} className="absolute top-48 right-[20%] h-2 w-2 rounded-full bg-teal/30" />
+      <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 3.5 }} className="absolute bottom-40 left-[25%] h-2 w-2 rounded-full bg-coral/25" />
+
+      <div className="relative mx-auto max-w-2xl text-center">
         <motion.h2
           initial={false}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -49,9 +58,9 @@ export default function Contact() {
           initial={false}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ delay: 0.4 }}
-          whileHover={{ scale: 1.05, boxShadow: "0 0 40px var(--color-orange-dim)" }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          className="mt-10 inline-block rounded-full border border-orange/30 px-10 py-4 text-sm font-semibold text-orange hover:bg-orange-subtle shadow-sm"
+          className="mt-10 inline-block rounded-full bg-gradient-to-r from-orange to-amber px-10 py-4 text-sm font-semibold text-white shadow-lg shadow-orange/20"
         >
           打个招呼 →
         </motion.a>
@@ -69,7 +78,7 @@ export default function Contact() {
               onHoverStart={() => setHovered(i)}
               onHoverEnd={() => setHovered(null)}
               whileHover={{ y: -4 }}
-              className="relative flex h-12 w-12 items-center justify-center rounded-full border border-card-border text-xs font-mono text-muted hover:text-orange hover:border-orange/30"
+              className={`relative flex h-12 w-12 items-center justify-center rounded-full border border-card-border text-xs font-mono text-muted transition-all ${s.color}`}
             >
               {hovered === i && (
                 <motion.div
@@ -88,7 +97,7 @@ export default function Contact() {
         initial={false}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 0.8 }}
-        className="mt-24 text-center text-xs text-muted/50 font-mono"
+        className="relative mt-24 text-center text-xs text-muted/50 font-mono"
       >
         用 ♥ 设计与构建
       </motion.div>

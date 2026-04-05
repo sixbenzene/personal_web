@@ -7,7 +7,6 @@ const links = [
   { label: "关于我", href: "about" },
   { label: "技能", href: "skills" },
   { label: "项目", href: "projects" },
-  { label: "联系", href: "contact" },
 ];
 
 export default function Navbar() {
@@ -27,7 +26,7 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-8 py-5 backdrop-blur-md ${scrolled ? "border-b border-card-border shadow-sm" : ""}`}
     >
       <motion.a href="#" className={`text-xl font-bold tracking-tight ${scrolled ? "text-orange" : "text-white"}`} whileHover={{ scale: 1.05 }}>
-        {"<Dev />"}
+        {"<GQ />"}
       </motion.a>
       <div className="flex gap-1">
         {links.map((link, i) => (

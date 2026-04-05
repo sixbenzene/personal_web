@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "开发者作品集",
-  description: "创意开发者作品集",
+  title: "刘国清 - AI 应用工程师",
+  description: "刘国清的个人作品集 - AI 应用工程师，专注语音识别与大模型开发",
 };
 
 export default function RootLayout({

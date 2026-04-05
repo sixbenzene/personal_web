@@ -5,22 +5,28 @@ import { useRef } from "react";
 
 const projects = [
   {
-    title: "电商平台",
-    desc: "全栈电商解决方案，支持实时库存管理、支付处理和管理后台。",
-    tags: ["Next.js", "Stripe", "PostgreSQL"],
-    color: "#f07030",
+    title: "视频翻译系统",
+    desc: "基于 Whisper Encoder + MLP 的音频文本评分模型，实现视频语音识别与多语言翻译的端到端流水线。",
+    tags: ["Whisper", "PyTorch", "FFmpeg"],
+    gradient: "from-orange to-amber",
+    accent: "text-orange",
+    tagBg: "bg-orange-subtle border-orange/15",
   },
   {
-    title: "AI 聊天应用",
-    desc: "基于大语言模型的实时聊天应用，支持流式响应、对话历史和 RAG 管道。",
-    tags: ["React", "Python", "WebSocket"],
-    color: "#f4a261",
+    title: "音频质量评分模型",
+    desc: "利用 Whisper Encoder 提取音频特征，结合多层感知机对文本与音频进行匹配度评分，用于语音合成质量评估。",
+    tags: ["Transformer", "MLP", "Python"],
+    gradient: "from-teal to-amber",
+    accent: "text-teal",
+    tagBg: "bg-teal-subtle border-teal/15",
   },
   {
-    title: "运维监控面板",
-    desc: "微服务监控面板，支持实时指标、告警和部署管理。",
-    tags: ["Go", "Grafana", "K8s"],
-    color: "#f07030",
+    title: "LLM 智能应用平台",
+    desc: "基于大模型 API 构建的智能对话与内容生成平台，支持流式输出、Prompt 管理与多模型切换。",
+    tags: ["LLM API", "FastAPI", "React"],
+    gradient: "from-indigo to-coral",
+    accent: "text-indigo",
+    tagBg: "bg-indigo-subtle border-indigo/15",
   },
 ];
 
@@ -47,26 +53,26 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
       onMouseMove={handleMouse}
       onMouseLeave={() => { x.set(0); y.set(0); }}
       style={{ rotateX, rotateY, perspective: 800 }}
-      className="group relative rounded-2xl border border-card-border bg-card-bg p-6 cursor-pointer overflow-hidden shadow-sm hover:shadow-lg hover:shadow-orange/5 transition-shadow"
+      className="group relative rounded-2xl border border-card-border bg-card-bg p-6 cursor-pointer overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
     >
+      {/* Top gradient line */}
       <motion.div
         initial={false}
         animate={{ scaleX: inView ? 1 : 0 }}
         transition={{ delay: 0.3 + index * 0.15, duration: 0.8 }}
-        className="absolute top-0 left-0 right-0 h-px origin-left"
-        style={{ background: `linear-gradient(90deg, ${project.color}, transparent)` }}
+        className={`absolute top-0 left-0 right-0 h-1 origin-left bg-gradient-to-r ${project.gradient}`}
       />
 
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
-          <span className="font-mono text-xs text-orange/50">0{index + 1}</span>
-          <motion.span whileHover={{ x: 4 }} className="text-orange/40 group-hover:text-orange transition-colors">→</motion.span>
+          <span className={`font-mono text-xs ${project.accent} opacity-60`}>0{index + 1}</span>
+          <motion.span whileHover={{ x: 4 }} className={`${project.accent} opacity-40 group-hover:opacity-100 transition-opacity`}>→</motion.span>
         </div>
-        <h3 className="text-xl font-semibold mb-2 group-hover:text-orange transition-colors">{project.title}</h3>
+        <h3 className={`text-xl font-semibold mb-2 group-hover:${project.accent} transition-colors`}>{project.title}</h3>
         <p className="text-sm text-muted leading-relaxed mb-4">{project.desc}</p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <span key={tag} className="rounded-full border border-card-border bg-orange-subtle px-3 py-1 text-xs font-mono text-muted">{tag}</span>
+            <span key={tag} className={`rounded-full border px-3 py-1 text-xs font-mono text-muted ${project.tagBg}`}>{tag}</span>
           ))}
         </div>
       </div>
@@ -79,12 +85,16 @@ export default function Projects() {
   const inView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section id="projects" ref={ref} className="relative py-32 px-6">
+    <section id="projects" ref={ref} className="relative py-32 px-6 overflow-hidden">
+      {/* Decorative blobs */}
+      <div className="absolute top-16 -right-20 h-48 w-48 rounded-full bg-indigo/5 blur-[60px]" />
+      <div className="absolute bottom-16 -left-20 h-56 w-56 rounded-full bg-coral/5 blur-[60px]" />
+
       <motion.div
         initial={false}
         animate={{ scaleX: inView ? 1 : 0 }}
         transition={{ duration: 1.2 }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-2/3 bg-gradient-to-r from-transparent via-orange/30 to-transparent origin-center"
+        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-2/3 bg-gradient-to-r from-transparent via-teal/30 to-transparent origin-center"
       />
 
       <div className="mx-auto max-w-4xl">

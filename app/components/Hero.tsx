@@ -79,14 +79,17 @@ export default function Hero() {
         animate={mounted ? "visible" : "hidden"}
       >
         <motion.p variants={fadeUp} transition={{ delay: 0.1 }} className="mb-4 font-mono text-sm tracking-widest text-white/70 uppercase">
-          Creative Developer
+          AI Application Engineer
         </motion.p>
         <motion.h1 variants={fadeUp} transition={{ delay: 0.2, type: "spring", stiffness: 80 }} className="text-6xl font-bold tracking-tight sm:text-8xl">
           <span className="text-white">你好，我是 </span>
-          <span className="text-white/90 drop-shadow-lg">开发者</span>
+          <span className="relative text-white font-black">
+            <span className="relative z-10">刘国清</span>
+            <span className="absolute inset-0 bg-white/25 blur-lg rounded-lg" />
+          </span>
         </motion.h1>
-        <motion.p variants={fadeUp} transition={{ delay: 0.3 }} className="mt-6 max-w-lg mx-auto text-lg text-white/70 leading-relaxed">
-          全栈开发者，热衷于使用现代 Web 技术打造优雅的数字体验。
+        <motion.p variants={fadeUp} transition={{ delay: 0.3 }} className="mt-6 max-w-xl mx-auto text-lg text-white/70 leading-relaxed">
+          AI 应用工程师，专注于语音识别、大模型 API 开发与多模态 AI 应用落地。
         </motion.p>
         <motion.div variants={fadeUp} transition={{ delay: 0.5 }} className="mt-10 flex justify-center gap-4">
           <motion.a
@@ -98,12 +101,12 @@ export default function Hero() {
             查看项目
           </motion.a>
           <motion.a
-            href="#contact"
+            href="#about"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             className="rounded-full border border-white/40 px-8 py-3 text-sm font-semibold text-white hover:bg-white/10 backdrop-blur-sm"
           >
-            联系我
+            了解更多
           </motion.a>
         </motion.div>
       </motion.div>
