@@ -16,6 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Guoqing Liu - AI Application Engineer",
   description: "Personal portfolio of Guoqing Liu - AI Application Engineer specializing in speech recognition and LLM development",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
