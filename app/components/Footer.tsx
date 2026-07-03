@@ -2,8 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
+import { useLang } from "../i18n/context";
 
 export default function Footer() {
+  const { t } = useLang();
   const [showWechat, setShowWechat] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -39,7 +41,7 @@ export default function Footer() {
           viewport={{ once: true }}
           className="space-y-3"
         >
-          <p className="text-sm text-muted">联系方式</p>
+          <p className="text-sm text-muted">{t("footer.contact")}</p>
 
           <AnimatePresence mode="wait">
             {!showWechat ? (
@@ -52,7 +54,7 @@ export default function Footer() {
                 className="inline-flex items-center gap-2 rounded-full border border-card-border bg-card-bg px-6 py-2.5 text-sm font-medium text-foreground shadow-sm hover:border-teal/30 hover:shadow-md transition-all cursor-pointer"
               >
                 <span className="text-teal">💬</span>
-                点击查看微信号
+                {t("footer.reveal")}
               </motion.button>
             ) : (
               <motion.div
@@ -67,10 +69,10 @@ export default function Footer() {
                     onClick={handleCopy}
                     className="text-xs text-teal/70 hover:text-teal transition-colors cursor-pointer"
                   >
-                    {copied ? "✓ 已复制" : "复制"}
+                    {copied ? t("footer.copied") : t("footer.copy")}
                   </button>
                 </div>
-                <p className="text-xs text-muted/60">添加时请备注来意</p>
+                <p className="text-xs text-muted/60">{t("footer.note")}</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -84,7 +86,7 @@ export default function Footer() {
           transition={{ delay: 0.2 }}
           className="text-xs text-muted/40 font-mono pt-4"
         >
-          © 2026 刘国清 · 用 ♥ 设计与构建
+          {t("footer.copyright")}
         </motion.div>
       </div>
     </footer>

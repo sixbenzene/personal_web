@@ -2,19 +2,23 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLang } from "../i18n/context";
 
 const techTags = [
   { name: "Python", color: "bg-amber-subtle text-amber border-amber/20" },
   { name: "PyTorch", color: "bg-coral-subtle text-coral border-coral/20" },
-  { name: "Whisper", color: "bg-teal-subtle text-teal border-teal/20" },
-  { name: "LLM API", color: "bg-indigo-subtle text-indigo border-indigo/20" },
-  { name: "FastAPI", color: "bg-teal-subtle text-teal border-teal/20" },
-  { name: "Transformers", color: "bg-orange-subtle text-orange border-orange/20" },
+  { name: "LLM / RAG / Agent", color: "bg-indigo-subtle text-indigo border-indigo/20" },
+  { name: "Whisper / ASR / TTS", color: "bg-teal-subtle text-teal border-teal/20" },
+  { name: "FastAPI / Flask", color: "bg-orange-subtle text-orange border-orange/20" },
+  { name: "Docker / K8s", color: "bg-teal-subtle text-teal border-teal/20" },
+  { name: "FFmpeg / OpenCV", color: "bg-coral-subtle text-coral border-coral/20" },
+  { name: "ONNX", color: "bg-amber-subtle text-amber border-amber/20" },
 ];
 
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
+  const { t } = useLang();
 
   return (
     <section id="about" ref={ref} className="relative py-32 px-6 overflow-hidden">
@@ -37,8 +41,8 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold tracking-tight sm:text-5xl"
         >
-          <span className="text-orange font-mono text-lg block mb-2">01.</span>
-          关于我
+          <span className="text-orange font-mono text-lg block mb-2">{t("about.number")}</span>
+          {t("about.title")}
         </motion.h2>
 
         <div className="mt-12 grid gap-12 md:grid-cols-[1fr_auto]">
@@ -49,10 +53,10 @@ export default function About() {
             className="space-y-5 text-muted leading-relaxed"
           >
             <p>
-              我是一名 AI 应用工程师，专注于将前沿的人工智能技术落地为实际产品。在语音识别领域，我基于 Whisper 模型的 Encoder 层结合多层感知机（MLP），训练文本与音频的评分任务模型，积累了丰富的多模态建模经验。
+              {t("about.p1")}
             </p>
             <p>
-              同时，我熟悉大语言模型 API 的开发与集成，能够快速构建基于 LLM 的智能应用。我热衷于探索 AI 技术的边界，将复杂的模型能力转化为用户可感知的产品价值。
+              {t("about.p2")}
             </p>
             <div className="flex flex-wrap gap-3 pt-4">
               {techTags.map((t, i) => (

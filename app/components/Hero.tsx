@@ -2,10 +2,12 @@
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { useLang } from "../i18n/context";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 export default function Hero() {
+  const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
   const [mounted, setMounted] = useState(false);
   const mouseX = useMotionValue(0.5);
@@ -79,17 +81,17 @@ export default function Hero() {
         animate={mounted ? "visible" : "hidden"}
       >
         <motion.p variants={fadeUp} transition={{ delay: 0.1 }} className="mb-4 font-mono text-sm tracking-widest text-white/70 uppercase">
-          AI Application Engineer
+          {t("hero.subtitle")}
         </motion.p>
         <motion.h1 variants={fadeUp} transition={{ delay: 0.2, type: "spring", stiffness: 80 }} className="text-6xl font-bold tracking-tight sm:text-8xl">
-          <span className="text-white">你好，我是 </span>
+          <span className="text-white">{t("hero.greeting")}</span>
           <span className="relative text-white font-black">
-            <span className="relative z-10">刘国清</span>
+            <span className="relative z-10">{t("hero.name")}</span>
             <span className="absolute inset-0 bg-white/25 blur-lg rounded-lg" />
           </span>
         </motion.h1>
         <motion.p variants={fadeUp} transition={{ delay: 0.3 }} className="mt-6 max-w-xl mx-auto text-lg text-white/70 leading-relaxed">
-          AI 应用工程师，专注于语音识别、大模型 API 开发与多模态 AI 应用落地。
+          {t("hero.description")}
         </motion.p>
         <motion.div variants={fadeUp} transition={{ delay: 0.5 }} className="mt-10 flex justify-center gap-4">
           <motion.a
@@ -98,7 +100,7 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
             className="rounded-full bg-white px-8 py-3 text-sm font-semibold text-orange shadow-lg"
           >
-            查看项目
+            {t("hero.cta1")}
           </motion.a>
           <motion.a
             href="#about"
@@ -106,7 +108,7 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
             className="rounded-full border border-white/40 px-8 py-3 text-sm font-semibold text-white hover:bg-white/10 backdrop-blur-sm"
           >
-            了解更多
+            {t("hero.cta2")}
           </motion.a>
         </motion.div>
       </motion.div>

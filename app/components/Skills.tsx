@@ -2,14 +2,16 @@
 
 import { motion, useInView, useMotionValue, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
+import { useLang } from "../i18n/context";
 
 const skills = [
-  { name: "Python", level: 95, gradient: "from-amber to-orange" },
-  { name: "PyTorch / Transformers", level: 85, gradient: "from-coral to-orange" },
-  { name: "Whisper / ASR", level: 85, gradient: "from-teal to-amber" },
-  { name: "LLM API 开发", level: 90, gradient: "from-indigo to-teal" },
-  { name: "FastAPI / 后端", level: 80, gradient: "from-orange to-amber" },
-  { name: "数据处理 / 特征工程", level: 80, gradient: "from-teal to-indigo" },
+  { name: "Python", level: 95, gradient: "from-amber to-orange", slug: "python" },
+  { name: "PyTorch / Transformers", level: 85, gradient: "from-coral to-orange", slug: "pytorch" },
+  { name: "ASR / 语音处理", level: 85, gradient: "from-teal to-amber", slug: "asr" },
+  { name: "LLM API 开发", level: 90, gradient: "from-indigo to-teal", slug: "llm" },
+  { name: "微服务架构", level: 80, gradient: "from-orange to-amber", slug: "microservice" },
+  { name: "数据处理 / 特征工程", level: 80, gradient: "from-teal to-indigo", slug: "data" },
 ];
 
 function SkillBar({ skill, index, inView }: { skill: typeof skills[0]; index: number; inView: boolean }) {
@@ -18,37 +20,43 @@ function SkillBar({ skill, index, inView }: { skill: typeof skills[0]; index: nu
   const glow = useTransform(mouseX, [-100, 0, 100], [0, 1, 0]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={false}
-      animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-      transition={{ delay: 0.2 + index * 0.1 }}
-      onMouseMove={(e) => {
-        const rect = ref.current?.getBoundingClientRect();
-        if (rect) mouseX.set(e.clientX - rect.left - rect.width / 2);
-      }}
-      className="group"
-    >
-      <div className="flex justify-between mb-2">
-        <span className="text-sm font-mono text-muted group-hover:text-orange transition-colors">{skill.name}</span>
-        <span className="text-xs font-mono text-orange/70">{skill.level}%</span>
-      </div>
-      <div className="relative h-2.5 rounded-full bg-card-border overflow-hidden">
-        <motion.div
-          initial={false}
-          animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
-          transition={{ delay: 0.4 + index * 0.1, duration: 1, ease: "easeOut" }}
-          className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${skill.gradient}`}
-        />
-        <motion.div style={{ opacity: glow }} className="absolute inset-0 bg-orange/15 blur-sm" />
-      </div>
-    </motion.div>
+    <Link href={`/skills/${skill.slug}`}>
+      <motion.div
+        ref={ref}
+        initial={false}
+        animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+        transition={{ delay: 0.2 + index * 0.1 }}
+        onMouseMove={(e) => {
+          const rect = ref.current?.getBoundingClientRect();
+          if (rect) mouseX.set(e.clientX - rect.left - rect.width / 2);
+        }}
+        className="group cursor-pointer"
+      >
+        <div className="flex justify-between mb-2">
+          <span className="text-sm font-mono text-muted group-hover:text-orange transition-colors">
+            {skill.name}
+            <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-orange/60">→</span>
+          </span>
+          <span className="text-xs font-mono text-orange/70">{skill.level}%</span>
+        </div>
+        <div className="relative h-2.5 rounded-full bg-card-border overflow-hidden">
+          <motion.div
+            initial={false}
+            animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
+            transition={{ delay: 0.4 + index * 0.1, duration: 1, ease: "easeOut" }}
+            className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${skill.gradient}`}
+          />
+          <motion.div style={{ opacity: glow }} className="absolute inset-0 bg-orange/15 blur-sm" />
+        </div>
+      </motion.div>
+    </Link>
   );
 }
 
 export default function Skills() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
+  const { t } = useLang();
 
   return (
     <section id="skills" ref={ref} className="relative py-32 px-6 overflow-hidden">
@@ -79,8 +87,8 @@ export default function Skills() {
           animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
           className="text-4xl font-bold tracking-tight sm:text-5xl"
         >
-          <span className="text-orange font-mono text-lg block mb-2">02.</span>
-          技能
+          <span className="text-orange font-mono text-lg block mb-2">{t("skills.number")}</span>
+          {t("skills.title")}
         </motion.h2>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2">

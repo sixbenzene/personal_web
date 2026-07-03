@@ -2,36 +2,43 @@
 
 import { motion, useInView, useMotionValue, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
+import { useLang } from "../i18n/context";
 
 const projects = [
   {
-    title: "视频翻译系统",
-    desc: "基于 Whisper Encoder + MLP 的音频文本评分模型，实现视频语音识别与多语言翻译的端到端流水线。",
-    tags: ["Whisper", "PyTorch", "FFmpeg"],
+    slug: "oral-scoring",
+    tags: ["ASR", "LLM", "Python", "SQLite"],
     gradient: "from-orange to-amber",
     accent: "text-orange",
     tagBg: "bg-orange-subtle border-orange/15",
   },
   {
-    title: "音频质量评分模型",
-    desc: "利用 Whisper Encoder 提取音频特征，结合多层感知机对文本与音频进行匹配度评分，用于语音合成质量评估。",
-    tags: ["Transformer", "MLP", "Python"],
+    slug: "fact-check",
+    tags: ["LLM API", "Playwright", "asyncio", "FastAPI"],
     gradient: "from-teal to-amber",
     accent: "text-teal",
     tagBg: "bg-teal-subtle border-teal/15",
   },
   {
-    title: "LLM 智能应用平台",
-    desc: "基于大模型 API 构建的智能对话与内容生成平台，支持流式输出、Prompt 管理与多模型切换。",
-    tags: ["LLM API", "FastAPI", "React"],
+    slug: "digital-human",
+    tags: ["Flask", "Redis", "K8s", "FFmpeg"],
     gradient: "from-indigo to-coral",
     accent: "text-indigo",
     tagBg: "bg-indigo-subtle border-indigo/15",
+  },
+  {
+    slug: "whisper-scoring",
+    tags: ["PyTorch", "Whisper", "ONNX", "Transformers"],
+    gradient: "from-coral to-orange",
+    accent: "text-coral",
+    tagBg: "bg-coral-subtle border-coral/15",
   },
 ];
 
 function ProjectCard({ project, index, inView }: { project: typeof projects[0]; index: number; inView: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
+  const { t } = useLang();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-150, 150], [6, -6]);
@@ -68,8 +75,8 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
           <span className={`font-mono text-xs ${project.accent} opacity-60`}>0{index + 1}</span>
           <motion.span whileHover={{ x: 4 }} className={`${project.accent} opacity-40 group-hover:opacity-100 transition-opacity`}>→</motion.span>
         </div>
-        <h3 className={`text-xl font-semibold mb-2 group-hover:${project.accent} transition-colors`}>{project.title}</h3>
-        <p className="text-sm text-muted leading-relaxed mb-4">{project.desc}</p>
+        <h3 className={`text-xl font-semibold mb-2 group-hover:${project.accent} transition-colors`}>{t(`projects.items.${project.slug}.title`)}</h3>
+        <p className="text-sm text-muted leading-relaxed mb-4">{t(`projects.items.${project.slug}.desc`)}</p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span key={tag} className={`rounded-full border px-3 py-1 text-xs font-mono text-muted ${project.tagBg}`}>{tag}</span>
@@ -83,6 +90,7 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
+  const { t } = useLang();
 
   return (
     <section id="projects" ref={ref} className="relative py-32 px-6 overflow-hidden">
@@ -103,13 +111,15 @@ export default function Projects() {
           animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
           className="text-4xl font-bold tracking-tight sm:text-5xl"
         >
-          <span className="text-orange font-mono text-lg block mb-2">03.</span>
-          项目
+          <span className="text-orange font-mono text-lg block mb-2">{t("projects.number")}</span>
+          {t("projects.title")}
         </motion.h2>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
           {projects.map((p, i) => (
-            <ProjectCard key={p.title} project={p} index={i} inView={inView} />
+            <Link key={p.slug} href={`/projects/${p.slug}`}>
+              <ProjectCard project={p} index={i} inView={inView} />
+            </Link>
           ))}
         </div>
       </div>
