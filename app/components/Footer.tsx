@@ -88,6 +88,17 @@ export default function Footer() {
         >
           {t("footer.copyright")}
         </motion.div>
+
+        <div className="text-xs text-muted/30 font-mono pt-2">
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-muted/60 transition-colors"
+          >
+            京ICP备2026041829号
+          </a>
+        </div>
       </div>
     </footer>
   );
