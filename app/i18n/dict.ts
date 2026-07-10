@@ -4,6 +4,7 @@ export const dict = {
       about: "About",
       skills: "Skills",
       projects: "Projects",
+      hobbies: "Hobbies",
     },
     hero: {
       subtitle: "AI Application Engineer",
@@ -116,6 +117,7 @@ export const dict = {
       about: "关于我",
       skills: "技能",
       projects: "项目",
+      hobbies: "爱好",
     },
     hero: {
       subtitle: "AI Application Engineer",

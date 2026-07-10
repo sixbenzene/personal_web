@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useLang } from "../i18n/context";
 
 export default function Navbar() {
@@ -10,9 +11,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const links = [
-    { label: t("nav.about"), href: "about" },
-    { label: t("nav.skills"), href: "skills" },
-    { label: t("nav.projects"), href: "projects" },
+    { label: t("nav.about"), href: "#about", isRoute: false },
+    { label: t("nav.skills"), href: "#skills", isRoute: false },
+    { label: t("nav.projects"), href: "#projects", isRoute: false },
+    { label: t("nav.hobbies"), href: "/hobbies", isRoute: true },
   ];
 
   useEffect(() => {
@@ -31,25 +33,29 @@ export default function Navbar() {
         {"<GQ />"}
       </motion.a>
       <div className="flex items-center gap-1">
-        {links.map((link, i) => (
-          <motion.a
-            key={link.href}
-            href={`#${link.href}`}
-            className={`relative px-4 py-2 text-sm font-medium transition-colors ${scrolled ? "text-muted hover:text-foreground" : "text-white/70 hover:text-white"}`}
-            onHoverStart={() => setHovered(i)}
-            onHoverEnd={() => setHovered(null)}
-            whileHover={{ y: -2 }}
-          >
-            {hovered === i && (
+        {links.map((link, i) => {
+          const Tag = link.isRoute ? Link : "a";
+          const href = link.isRoute ? link.href : link.href;
+          return (
+            <Tag key={link.href} href={href}>
               <motion.span
-                layoutId="nav-pill"
-                className={`absolute inset-0 rounded-full ${scrolled ? "bg-orange-subtle" : "bg-white/15"}`}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              />
-            )}
-            <span className="relative z-10">{link.label}</span>
-          </motion.a>
-        ))}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors inline-block ${scrolled ? "text-muted hover:text-foreground" : "text-white/70 hover:text-white"}`}
+                onHoverStart={() => setHovered(i)}
+                onHoverEnd={() => setHovered(null)}
+                whileHover={{ y: -2 }}
+              >
+                {hovered === i && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className={`absolute inset-0 rounded-full ${scrolled ? "bg-orange-subtle" : "bg-white/15"}`}
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  />
+                )}
+                <span className="relative z-10">{link.label}</span>
+              </motion.span>
+            </Tag>
+          );
+        })}
 
         {/* Language switcher */}
         <button
